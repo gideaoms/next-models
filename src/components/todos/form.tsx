@@ -4,34 +4,25 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { Todo } from '@/core/models/todo';
+import { Owner } from '@/core/models/user';
 
 const schema = z.object({
   title: z.string().min(1),
   completed: z.boolean(),
 });
 
-type Todo = {
-  id: number,
-  userId: number,
-  title: string,
-  completed: boolean
-}
-
-type Owner = {
-  id: string;
-  name: string;
-}
-
-export function Form(props: { todo: Todo; owner: Owner }) {
+export function Form(props: { todo: Todo }) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const form = useForm({
     resolver: zodResolver(schema),
     values: {
       title: props.todo.title,
-      completed: props.todo.completed,
+      completed: props.todo.isDone(),
     },
   });
+  const owner = props.todo.owner ?? Owner.empty
 
   async function submit(title: string, completed: boolean) {
     await fetch(`https://jsonplaceholder.typicode.com/todos/${props.todo.id}`, {
@@ -52,7 +43,7 @@ export function Form(props: { todo: Todo; owner: Owner }) {
       className="p-2"
       onSubmit={form.handleSubmit(({ title, completed }) => submit(title, completed))}
     >
-      <p>Owner: {props.owner.name}</p>
+      <p>Owner: {owner.name}</p>
       <div>
         <input
           className="border rounded p-1 border-zinc-600"
