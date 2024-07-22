@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Todo } from '@/core/models/todo';
 import { Owner } from '@/core/models/user';
+import { Address } from '@/core/models/address';
 
 const schema = z.object({
   title: z.string().min(1),
@@ -23,6 +24,7 @@ export function Form(props: { todo: Todo }) {
     },
   });
   const owner = props.todo.owner ?? Owner.empty
+  const address = owner.address ?? Address.empty
 
   async function submit(title: string, completed: boolean) {
     await fetch(`https://jsonplaceholder.typicode.com/todos/${props.todo.id}`, {
@@ -44,6 +46,7 @@ export function Form(props: { todo: Todo }) {
       onSubmit={form.handleSubmit(({ title, completed }) => submit(title, completed))}
     >
       <p>Owner: {owner.name}</p>
+      <p>Address: {address.street} - {address.city}</p>
       <div>
         <input
           className="border rounded p-1 border-zinc-600"
