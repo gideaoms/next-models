@@ -1,7 +1,7 @@
 import { Form } from "@/components/todos/form"
+import { Address } from "@/core/models/address";
 import { Todo } from "@/core/models/todo";
 import { Owner } from "@/core/models/user";
-import { todo } from "node:test";
 
 export default async function Page(props: {
   params: { todo_id: string }; searchParams: { user_id: string }
@@ -18,6 +18,10 @@ export default async function Page(props: {
     owner: Owner.build({
       id: ownerAsJson.id,
       name: ownerAsJson.name,
+      address: Address.build({
+        city: ownerAsJson.address.city,
+        street: ownerAsJson.address.street,
+      })
     }),
   })
   return (
