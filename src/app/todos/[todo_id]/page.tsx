@@ -14,7 +14,7 @@ export default async function Page(props: {
     id: todoAsJson.id,
     userId: todoAsJson.userId,
     title: todoAsJson.title,
-    status: Boolean(todoAsJson.completed) ? 'done' : 'pending',
+    status: todoAsJson.completed ? 'done' : 'pending',
     owner: Owner.build({
       id: ownerAsJson.id,
       name: ownerAsJson.name,

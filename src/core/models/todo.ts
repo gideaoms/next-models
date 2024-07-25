@@ -31,7 +31,6 @@ export module Todo {
   }
 
   export function isOwner(todo: T, ownerId: string) {
-    console.log(typeof todo.userId, typeof ownerId)
     return todo.userId === ownerId;
   }
 }
