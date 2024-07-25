@@ -6,9 +6,9 @@ import { todo } from "node:test";
 export default async function Page(props: {
   params: { todo_id: string }; searchParams: { user_id: string }
 }) {
-  const todoAsJson = await fetch(`https://jsonplaceholder.typicode.com/todos/${props.params.todo_id}`)
+  const todoAsJson = await fetch(`http://localhost:3001/todos/${props.params.todo_id}`)
     .then(response => response.json())
-  const ownerAsJson = await fetch(`https://jsonplaceholder.typicode.com/users/${props.searchParams.user_id}`)
+  const ownerAsJson = await fetch(`http://localhost:3001/users/${props.searchParams.user_id}`)
     .then(response => response.json())
   const todo = Todo.build({
     id: todoAsJson.id,

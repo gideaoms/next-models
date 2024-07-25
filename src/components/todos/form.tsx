@@ -27,7 +27,7 @@ export function Form(props: { todo: Todo }) {
   const address = owner.address ?? Address.empty
 
   async function submit(title: string, completed: boolean) {
-    await fetch(`https://jsonplaceholder.typicode.com/todos/${props.todo.id}`, {
+    await fetch(`http://localhost:3001/todos/${props.todo.id}`, {
       method: 'PATCH',
       body: JSON.stringify({
         title,
