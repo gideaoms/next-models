@@ -1,27 +1,20 @@
 import { Address } from "@/core/models/address";
 
-export declare module Owner {
-  type Props = {
-    id: number;
+export module Owner {
+  export type T = {
+    id: string;
     name: string;
-    address?: Address;
+    address?: Address.T;
   }
-}
 
-export class Owner {
-  static empty = Owner.build({})
+  export const empty = build({})
 
-  private constructor(
-    readonly id: number,
-    readonly name: string,
-    readonly address: Address | undefined,
-  ) { }
-
-  static build(props: Partial<Owner.Props>) {
-    return new Owner(
-      props.id ?? 0,
-      props.name ?? '',
-      props.address,
-    )
+  export function build(props: Partial<T>) {
+    const owner: T = {
+      id: props.id ?? '',
+      name: props.name ?? '',
+      address: props.address,
+    }
+    return owner
   }
 }

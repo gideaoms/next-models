@@ -13,14 +13,14 @@ const schema = z.object({
   completed: z.boolean(),
 });
 
-export function Form(props: { todo: Todo }) {
+export function Form(props: { todo: Todo.T }) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const form = useForm({
     resolver: zodResolver(schema),
     values: {
       title: props.todo.title,
-      completed: props.todo.isDone(),
+      completed: Todo.isDone(props.todo),
     },
   });
   const owner = props.todo.owner ?? Owner.empty
@@ -38,6 +38,7 @@ export function Form(props: { todo: Todo }) {
       },
     })
     router.push(`/?user_id=${searchParams.get('user_id')}`)
+    router.refresh()
   }
 
   return (

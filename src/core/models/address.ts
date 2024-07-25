@@ -1,22 +1,16 @@
-export declare module Address {
-  type Props = {
+export module Address {
+  export type T = {
     street: string;
     city: string;
   }
-}
 
-export class Address {
-  static empty = Address.build({})
+  export const empty = build({})
 
-  private constructor(
-    readonly street: string,
-    readonly city: string,
-  ) { }
-
-  static build(props: Partial<Address.Props>) {
-    return new Address(
-      props.street ?? '',
-      props.city ?? '',
-    )
+  export function build(props: Partial<Address.T>) {
+    const address = {
+      street: props.street ?? '',
+      city: props.city ?? '',
+    }
+    return address;
   }
 }

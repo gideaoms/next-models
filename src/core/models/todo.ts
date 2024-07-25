@@ -1,44 +1,37 @@
 import { Owner } from "@/core/models/user";
 
-export declare module Todo {
-  type Props = {
-    id: number;
-    userId: number;
+export module Todo {
+  export type T = {
+    id: string;
+    userId: string;
     title: string;
     status: Status;
-    owner: Owner
-  }
-  type Status = 'pending' | 'done'
-}
-
-export class Todo {
-  private constructor(
-    readonly id: number,
-    readonly userId: number,
-    readonly title: string,
-    readonly status: Todo.Status,
-    readonly owner: Owner | undefined,
-  ) { }
-
-  static build(props: Partial<Todo.Props>) {
-    return new Todo(
-      props.id ?? 0,
-      props.userId ?? 0,
-      props.title ?? '',
-      props.status ?? 'pending',
-      props.owner,
-    )
+    owner?: Owner.T;
   }
 
-  isDone() {
-    return this.status === 'done';
+  export type Status = 'pending' | 'done'
+
+  export function build(props: Partial<Todo.T>) {
+    const todo: T = {
+      id: props.id ?? '',
+      userId: props.userId ?? '',
+      title: props.title ?? '',
+      status: props.status ?? 'pending',
+      owner: props.owner,
+    }
+    return todo;
   }
 
-  toDone() {
-    return Todo.build({ ...this, status: 'done' })
+  export function isDone(todo: T) {
+    return todo.status === 'done';
   }
 
-  isOwner(ownerId: number) {
-    return this.userId === ownerId;
+  export function toDone(todo: T) {
+    return build({ ...todo, status: 'done' })
+  }
+
+  export function isOwner(todo: T, ownerId: string) {
+    console.log(typeof todo.userId, typeof ownerId)
+    return todo.userId === ownerId;
   }
 }
